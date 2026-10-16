@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Uma carta para Célio e Dani</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg1:#0a1a44; --bg2:#1f4f9c; --bg3:#a9cdf3;
+  --env:#4a7bc4; --env-light:#6a98dc; --env-dark:#3a65a8;
+  --paper:#f5f9fe; --paper-line:#c6d8ee; --ink:#1d3557; --accent:#2c5aa0;
+  --script:"Great Vibes","Snell Roundhand","Brush Script MT",cursive;
+  --serif:Lora,Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#071436;--paper:#f0f6fd}}
+:root[data-theme="dark"]{--bg1:#071436;--paper:#f0f6fd}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;height:100%;overflow:hidden;font-family:var(--serif);color:var(--ink);
+  background:linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 55%,var(--bg3) 100%);
+  background-color:var(--bg1);
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10}
+
+/* partículas */
+#fx{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+#fx span{position:absolute;bottom:-40px;color:#dcebff;opacity:0;animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) rotate(0);opacity:0}15%{opacity:.7}85%{opacity:.5}100%{transform:translateY(-110vh) rotate(40deg);opacity:0}}
+
+/* palco do envelope */
+.stage{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;z-index:1;transition:opacity .6s,transform .6s}
+body.reading .stage{opacity:0;transform:scale(.9);pointer-events:none}
+.env{
+  position:relative;width:min(84vw,360px);aspect-ratio:3/2;border:0;padding:0;background:none;cursor:pointer;
+  perspective:1100px;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 22px 28px rgba(5,15,50,.45));
+  animation:float 5s ease-in-out infinite;
+}
+body.open .env{animation:none}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.env .back{position:absolute;inset:0;background:var(--env-dark);border-radius:8px}
+.env .mini{position:absolute;left:6%;right:6%;top:5%;bottom:5%;background:var(--paper);border-radius:4px;z-index:2;
+  transition:transform .9s cubic-bezier(.3,.7,.3,1) .75s;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+body.open .mini{transform:translateY(-62%)}
+.env .pocket{position:absolute;inset:0;z-index:3;border-radius:8px;
+  background:linear-gradient(180deg,var(--env-light),var(--env));
+  clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%)}
+.env .pocket2{position:absolute;inset:0;z-index:3;border-radius:8px;background:var(--env-light);opacity:.55;
+  clip-path:polygon(0 100%,50% 44%,100% 100%)}
+.env .flap{position:absolute;left:0;right:0;top:0;height:58%;z-index:4;transform-origin:top center;
+  background:linear-gradient(180deg,var(--env-light),var(--env));clip-path:polygon(0 0,100% 0,50% 100%);
+  border-radius:8px 8px 0 0;transition:transform .8s cubic-bezier(.5,0,.2,1),z-index 0s .4s}
+body.open .flap{transform:rotateX(180deg);z-index:1}
+.seal{position:absolute;left:50%;top:58%;z-index:5;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#4a78c2,#1b3d7a 70%);color:#e8f1ff;display:grid;place-items:center;
+  font-family:var(--script);font-size:20px;line-height:1;box-shadow:0 3px 8px rgba(0,0,0,.35),inset 0 0 0 2px rgba(255,255,255,.25);
+  transition:opacity .4s,transform .5s}
+body.open .seal{opacity:0;transform:scale(.5)}
+.hint{color:#e6f0ff;font-size:.95rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;animation:pulse 2.4s ease-in-out infinite;transition:opacity .4s}
+body.open .hint{opacity:0;animation:none}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:.95}}
+
+/* carta */
+.sheet{position:fixed;inset:0;z-index:2;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
+  padding:calc(env(safe-area-inset-top,0px) + 16px) 14px calc(env(safe-area-inset-bottom,0px) + 28px);
+  visibility:hidden;opacity:0;transition:opacity .7s,visibility 0s .7s}
+body.reading .sheet{visibility:visible;opacity:1;transition:opacity .7s .1s}
+.paper{
+  max-width:640px;margin:10px auto 0;padding:clamp(28px,7vw,56px) clamp(22px,6vw,52px);
+  background:linear-gradient(180deg,#fafcff,var(--paper));border:1px solid var(--paper-line);border-radius:10px;
+  box-shadow:0 0 0 6px rgba(255,255,255,.35),0 0 0 7px var(--paper-line),0 24px 50px rgba(5,15,50,.45);
+  transform:translateY(40px) scale(.94);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+body.reading .paper{transform:none}
+.paper h1{font-family:var(--script);font-weight:400;font-size:clamp(2.6rem,11vw,3.8rem);line-height:1.1;margin:0 0 .5em;color:var(--accent);text-align:center}
+.paper p{margin:0 0 1.25em;font-size:clamp(1rem,4.1vw,1.15rem);line-height:1.8;text-align:left;opacity:0}
+.paper .c{text-align:center}
+.paper .sig{font-family:var(--script);font-size:clamp(2.4rem,10vw,3.2rem);line-height:1.1;color:var(--accent);text-align:right;margin:.2em 0 0}
+.paper .rule{height:1px;margin:0 auto 1.6em;width:40%;background:linear-gradient(90deg,transparent,var(--paper-line),transparent)}
+body.reading .paper > *{animation:fade .9s ease both;animation-delay:calc(var(--i,0) * .45s + .7s)}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.paper h1,.paper .rule{opacity:0}
+
+.close{position:fixed;z-index:3;top:calc(env(safe-area-inset-top,0px) + 12px);right:14px;border:1px solid rgba(255,255,255,.45);
+  background:rgba(10,26,68,.55);color:#eaf3ff;font:500 .8rem var(--serif);padding:8px 14px;border-radius:999px;cursor:pointer;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);visibility:hidden;opacity:0;transition:opacity .5s}
+body.reading .close{visibility:visible;opacity:1;transition-delay:1s}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01s!important;transition-duration:.01s!important;transition-delay:0s!important;animation-delay:0s!important}
+}
+</style>
+</head>
+<body>
+<div id="fx" aria-hidden="true"></div>
+
+<main class="stage">
+  <button class="env" id="env" aria-label="Abrir a carta">
+    <span class="back"></span>
+    <span class="mini"></span>
+    <span class="pocket"></span>
+    <span class="pocket2"></span>
+    <span class="flap"></span>
+    <span class="seal">C&nbsp;&amp;&nbsp;D</span>
+  </button>
+  <div class="hint">Toque para abrir</div>
+</main>
+
+<button class="close" id="close">Fechar carta</button>
+
+<section class="sheet" id="sheet" aria-label="Carta">
+  <article class="paper">
+    <h1 style="--i:0">Célio e Dani!</h1>
+    <div class="rule" style="--i:1"></div>
+    <p style="--i:2">Hoje quero dedicar algumas palavras a vocês, um casal que tem uma história construída com muito amor, companheirismo e cumplicidade.</p>
+    <p style="--i:3">É bonito ver duas pessoas que compartilham a vida, os sonhos, as dificuldades e as conquistas, aprendendo uma com a outra e fortalecendo, a cada dia, os laços que as unem. Porque o verdadeiro amor vai muito além das palavras: ele está nos gestos, no cuidado, na parceria.</p>
+    <p style="--i:4">Desejo que vocês nunca percam essa cumplicidade tão especial, que continuem sendo abrigo um para o outro, que saibam transformar os dias difíceis em aprendizado e os dias felizes em lembranças inesquecíveis.</p>
+    <p style="--i:5">Que nunca faltem motivos para sorrir juntos, conversas que aproximem, abraços que confortem e sonhos que inspirem vocês a continuar caminhando lado a lado.</p>
+    <p style="--i:6">Meu desejo é que Deus abençoe essa união, proteja o lar de vocês e renove diariamente o amor, o respeito, a paciência e a amizade que fazem de vocês um casal tão especial.</p>
+    <p style="--i:7">Que vocês nunca se esqueçam da força que existe quando duas pessoas caminham na mesma direção, respeitando suas diferenças e escolhendo uma à outra todos os dias.</p>
+    <p style="--i:8">A vida é feita de fases, e nem todas serão fáceis, mas que vocês sempre se lembrem de que o mais importante não é ter uma história perfeita, e sim construir uma história verdadeira, cheia de amor, respeito e cumplicidade.</p>
+    <p style="--i:9">Recebam todo o meu carinho, minha admiração e meus votos de muitas felicidades. Que ainda tenham muitos e muitos anos para compartilhar momentos, realizar sonhos e escrever novos capítulos dessa linda história.</p>
+    <p class="c" style="--i:10">Amo vocês! ❤️</p>
+    <p class="c" style="--i:11">Com todo o meu carinho. bjos</p>
+    <p class="sig" style="--i:12">Solange</p>
+  </article>
+</section>
+
+<script>
+(function(){
+  var b=document.body, env=document.getElementById('env'), sheet=document.getElementById('sheet'), t1, t2;
+  var fx=document.getElementById('fx'), g=['♥','✦','✧','·','♥'];
+  for(var i=0;i<26;i++){
+    var s=document.createElement('span');
+    s.textContent=g[i%g.length];
+    s.style.left=(Math.random()*100)+'%';
+    s.style.fontSize=(10+Math.random()*16)+'px';
+    s.style.animationDuration=(14+Math.random()*16)+'s';
+    s.style.animationDelay=(-Math.random()*24)+'s';
+    fx.appendChild(s);
+  }
+  function openLetter(){
+    if(b.classList.contains('open'))return;
+    b.classList.add('open'); sheet.scrollTop=0;
+    t1=setTimeout(function(){b.classList.add('reading')},1900);
+  }
+  function closeLetter(){
+    clearTimeout(t1); clearTimeout(t2);
+    b.classList.remove('reading');
+    t2=setTimeout(function(){b.classList.remove('open')},700);
+  }
+  env.addEventListener('click',openLetter);
+  document.getElementById('close').addEventListener('click',closeLetter);
+})();
+</script>
+</body>
+</html>
